@@ -57,7 +57,7 @@ class GridWorldWindow(object):
 
             self.btn_value_iteration_slow = Button(self.frame_value_buttons,
                                                    text='Slow Value Iteration',
-                                                   anchor='E)
+                                                   anchor=E)
             self.btn_value_iteration_slow.pack(side=LEFT)
 
             self.btn_policy_iteration_1_step = Button(self.frame_policy_buttons,
