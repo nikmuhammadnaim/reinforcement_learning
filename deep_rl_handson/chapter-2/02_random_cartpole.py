@@ -17,6 +17,8 @@ if __name__ == "__main__":
         obs, reward, done, _ = env.step(action)
         total_reward += reward
         total_steps += 1
+
+        # Check if game is finished
         if done:
             break
 
