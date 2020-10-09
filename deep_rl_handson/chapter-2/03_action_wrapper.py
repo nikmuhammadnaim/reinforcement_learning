@@ -1,5 +1,9 @@
+#!/usr/bin/env python
 import gym
+from typing import TypeVar
 import random
+
+Action = TypeVar('Action')
 
 class RandomActionWrapper(gym.ActionWrapper):
     """docstring for RandomActionWrapper."""
@@ -8,9 +12,9 @@ class RandomActionWrapper(gym.ActionWrapper):
         super(RandomActionWrapper, self).__init__(env)
         self.epsilon = epsilon
 
-    def action(self, action):
+    def action(self, action:Action) -> Action:
         if random.random() < self.epsilon:
-            print('Radom!')
+            print('Re-random given action')
             return self.env.action_space.sample()
         return action
 
@@ -21,7 +25,8 @@ if __name__ == '__main__':
     total_reward = 0.0
 
     while True:
-        obs, reward, done, _ = env.step(0)
+        action = env.action_space.sample()
+        obs, reward, done, _ = env.step(action)
         total_reward += reward
         if done:
             break

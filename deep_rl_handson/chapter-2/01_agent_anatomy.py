@@ -1,38 +1,46 @@
-import random
+#!/usr/bin/env python
 
-class Environment:
-    """docstring for Environment."""
+import numpy as np
+from typing import List
+
+class Environment():
+    """Simple dummy environment"""
 
     # The default limit to the number of time steps for the agents is 10
     def __init__(self, steps_left=10):
         self.steps_left = steps_left
+        self.last_action = None
 
-    # Returns the current environment state
-    def get_observation(self):
+    def get_observation(self) -> List[float]:
+        """
+        Returns the current environment state. In this case it will be the 
+        number of times each action is taken (similar to bandit problem)
+        """
         return [0.0, 0.0, 0.0]
 
-    # This method allows the agent to query the set of actions it can execute
-    # In this mini-example, the agent have only two possible actions at
-    # any time-step.
-    def get_actions(self):
-        return [0, 1]
+    def get_actions(self) -> List[int]:
+        """Returns the available actions the agent can perform"""
+        return [0, 1, 2]
 
-    # Check if there is any time steps left
-    def is_done(self):
+    def is_done(self) -> bool:
+        """Check if there is any time steps left"""
         return self.steps_left == 0
 
     # This is the central piece in the enviroment's functionality.
     # It does two things:
     # a) handles the agent's action
     # b) return the rewards (random in this example)
-    def action(self, action):
+    def step(self, action:int) -> int:
+        """"""
         if self.is_done():
             raise Exception("Game is over")
 
+        self.last_action = action
         self.steps_left -= 1
-        return random.randint(1, 10)
+        return np.random.randint(1, 10)
 
-class Agent(object):
+
+class Agent():
     """docstring for Agent."""
 
     def __init__(self):
@@ -44,18 +52,18 @@ class Agent(object):
     # c) Submit the action to the environment
     # d) Get the reward from the current step
     def step(self, env):
-        current_obs = env.get_observation()
+        _ = env.get_observation()
         actions = env.get_actions()
-        reward = env.action(random.choice(actions))
+        reward = env.step(np.random.choice(actions))
         self.total_reward += reward
 
 if __name__ == "__main__":
 
-    print('Would you like to increase the steps limit? Default limit is at 10.')
-    print('If yes, please enter a valid number')
+    user_prompt = ("Would you like to increase the steps limit? Default limit " 
+                   + "is at 10. If yes, please enter a valid number: ")
 
     try:
-        usr_limit = int(input('--> '))
+        usr_limit = int(input(user_prompt))
     except Exception as e:
         print('\nYou have opted for default limit')
         env = Environment()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import gym
 
 if __name__ == "__main__":
@@ -22,4 +24,4 @@ if __name__ == "__main__":
         if done:
             break
 
-print('Episode done in {} steps, total reward {:,.2f}'.format(total_steps, total_reward))
+print(f"Episode done in {total_steps} steps, total reward {total_reward:,.2f}")
